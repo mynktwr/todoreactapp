@@ -6,6 +6,7 @@ var count = 0
 const COMPLETED = "COMPLETED"
 const INCOMPLETED = "INCOMPLETED"
 const ALL = "ALL"
+var countOfTodos = 0
 
 function App() {
   const [editingFlag, setEditingFlag] = useState(-1)
@@ -119,11 +120,12 @@ const filterTodo = (action) =>
   }
 }
 
+
   return (
-    <div>
-      <h1>Todo Application </h1>
-      <h4>(by   Mayank)</h4>
-      <div>
+    <div >
+      <h1 class= "heading">Todo Application </h1>
+      <h4 class= "subHeading">(by   Mayank)</h4>
+      <div class="todosHeading">
         <label onClick={()=>filterTodo(INCOMPLETED)}>Incomplete</label>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
         <label onClick={()=>filterTodo(COMPLETED)}>Completed</label>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
         <label onClick={()=>filterTodo(ALL)}>All</label>
@@ -133,16 +135,19 @@ const filterTodo = (action) =>
       <button onClick={addTodo}>Add Todo</button>
 
       <div>
-        <ul>
+        <ul class = "listStyle">
           {todoList.map(iterator => 
           {
+            if(todoList[0].id === iterator.id)
+              countOfTodos = 0
             switch(filter)
             {
               case INCOMPLETED:
                 {
                   if(!iterator.completed)
                   {
-                    return <li key={iterator.id}>
+                    countOfTodos += 1
+                    return <li key={iterator.id} class = "listItem">
                             {
                                 iterator.completed == true ?
                                 <>
@@ -174,7 +179,9 @@ const filterTodo = (action) =>
                {
                 if(iterator.completed)
                 {
-                  return <li key={iterator.id}>
+                  countOfTodos += 1
+
+                  return <li key={iterator.id} class = "listItem">
                             {
                                 iterator.completed == true ?
                                 <>
@@ -204,7 +211,9 @@ const filterTodo = (action) =>
                } 
               case ALL:
                {
-                return <li key={iterator.id}>
+                countOfTodos += 1
+
+                return <li key={iterator.id} class = "listItem">
                             {
                                 iterator.completed == true ?
                                 <>
@@ -239,8 +248,12 @@ const filterTodo = (action) =>
           })
           }
         </ul>
+        <div>
+          count: {countOfTodos}
+        </div>
       </div>
     </div>
+
   );
 }
 
